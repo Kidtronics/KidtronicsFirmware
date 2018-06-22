@@ -27,11 +27,14 @@ int main() {
     char strMsg[30] = "<STR\rThis is a test\\";
     char boolMsg[30] = "<BOOL\r1\\";
     char unsupported[30] = "<\r100\\";
+    char unsupported2[30] = "<\\";
+    char unsupported3[30] = "<ARR\r132\\";
     
-    char* arr[6] = {intMsg, floatMsg, doubleMsg, strMsg, boolMsg, unsupported};
+    const int size = 8;
+    char* arr[size] = {intMsg, floatMsg, doubleMsg, strMsg, boolMsg, unsupported, unsupported2, unsupported3};
     
     MessageParser parser = MessageParser();
-    for (int i=0; i<6; i++) {
+    for (int i=0; i<size; i++) {
 		appendChecksumAndEndingCharacter(arr[i]);
     
     	if(parser.parse(arr[i])) {

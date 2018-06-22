@@ -6,7 +6,6 @@
  */
 
 #include "MessageParser.h"
-
 #include "MessageConstants.h"
 #include "Message.h"
 #include "stdlib.h"
@@ -109,6 +108,11 @@ DataType MessageParser::getDataTypeFromHeader(char* headerEndPtr) {
 	return str2DataType(header);
 }
 
+/**
+ *  bodyStartPtr: pinter pointing at the start of the message body.
+ *  dataType: dataType that we parse the data into.
+ *  return: return the pointer to parsed data value.
+ */
 void* MessageParser::getParsedDataFromMessageBody(char* bodyStartPtr, DataType dataType) {
 	unsigned int bodyLength = strlen(bodyStartPtr) - CHECKSUM_END_CHAR_SIZE;
 	char messageBody[MAX_MESSAGE_BODY_SIZE];
@@ -126,7 +130,7 @@ void* MessageParser::getParsedDataFromMessageBody(char* bodyStartPtr, DataType d
 	case DOUBLE:
 		return new double(atof(messageBody));
 	case BOOL:
-		return new bool(atoi(messageBody)==1);
+		return new bool(atoi(messageBody) == 1);
 	case STRING:
 		strcpy(str, messageBody);
 		return str;
