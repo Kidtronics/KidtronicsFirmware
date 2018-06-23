@@ -118,29 +118,29 @@ bool MessageParser::parseMessageBodyAndBuildMessage(char* bodyStartPtr, DataType
     Message::UnionData unionData;
 
 	switch (dataType) {
-		case INTEGER:
-        	unionData.INTEGER = atoi(messageBody);
-			m_parsedMessage = Message(unionData, dataType);
-            break;
-		case FLOAT:
-        	unionData.FLOAT = atof(messageBody);
-        	m_parsedMessage = Message(unionData, dataType);
-            break;
-		case DOUBLE:
-        	unionData.DOUBLE = atof(messageBody);
+        case INTEGER:
+            unionData.INTEGER = atoi(messageBody);
             m_parsedMessage = Message(unionData, dataType);
             break;
-		case BOOL:
+        case FLOAT:
+            unionData.FLOAT = atof(messageBody);
+            m_parsedMessage = Message(unionData, dataType);
+            break;
+        case DOUBLE:
+            unionData.DOUBLE = atof(messageBody);
+            m_parsedMessage = Message(unionData, dataType);
+            break;
+        case BOOL:
             unionData.BOOL = atoi(messageBody) == 1;
             m_parsedMessage = Message(unionData, dataType);
             break;
-		case STRING:
+        case STRING:
             unionData.CHAR_PTR = messageBody;
             m_parsedMessage = Message(unionData, dataType);
             break;
-		default:
+        default:
             return false;
-			break;
+            break;
 	}
 	return true;
 }

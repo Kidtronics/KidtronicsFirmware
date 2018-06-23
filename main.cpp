@@ -12,7 +12,6 @@
 #include "MessageParser.h"
 #include "Message.h"
 
-
 using namespace std;
 using namespace sp;
 
