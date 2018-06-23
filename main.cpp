@@ -35,12 +35,13 @@ int main() {
     
     MessageParser parser = MessageParser();
     for (int i=0; i<size; i++) {
-		appendChecksumAndEndingCharacter(arr[i]);
-    
-    	if(parser.parse(arr[i])) {
-        	Message message = parser.getParsedMessage();
-        	printMessage(message);
-    	}
+//    int i = 3;
+        appendChecksumAndEndingCharacter(arr[i]);
+
+        if(parser.parse(arr[i])) {
+            Message message = parser.getParsedMessage();
+            printMessage(message);
+        }
         else {
             cout << "unsupported" << endl;
         }
@@ -52,19 +53,19 @@ void printMessage(Message msg) {
     cout << "Value: ";
     switch (msg.getDataType()) {
         case INTEGER:
-            cout << *((int*) msg.getData()) << endl;
+            cout << ((Message::UnionData) msg.getData()).INTEGER << endl;
             break;
         case DOUBLE:
-            cout << *((double*) msg.getData()) << endl;
+            cout << ((Message::UnionData) msg.getData()).DOUBLE << endl;
             break;
         case FLOAT:
-            cout << *((float*) msg.getData()) << endl;
+            cout << ((Message::UnionData) msg.getData()).FLOAT << endl;
             break;
         case STRING:
-            cout << ((char*) msg.getData()) << endl;
+            cout << ((Message::UnionData) msg.getData()).CHAR_PTR << endl;
             break;
         case BOOL:
-            cout << *((bool*) msg.getData()) << endl;
+            cout << ((Message::UnionData) msg.getData()).BOOL << endl;
             break;
         default:
             break;

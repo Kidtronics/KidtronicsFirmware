@@ -11,26 +11,30 @@
 #include "MessageConstants.h"
 
 class Message {
+public:
+    union UnionData {
+        int INTEGER;
+        float FLOAT;
+        double DOUBLE;
+        char* CHAR_PTR;
+        bool BOOL;
+    };
 private:
-	void* m_data;
+	UnionData m_data;
 	sp::DataType m_dataType;
 public:
-	Message(void* data, sp::DataType dataType);
+	Message(UnionData data, sp::DataType dataType);
 	Message();
-	void* getData();
+	UnionData getData();
 	sp::DataType getDataType();
 };
 
-inline Message::Message(void* data, sp::DataType dataType) :
-		m_data(data), m_dataType(dataType)
-{}
-
 inline Message::Message() {
-	m_data = nullptr;
+	m_data.INTEGER = 0;
 	m_dataType = sp::UNSUPPORTED_TYPE;
 }
 
-inline void* Message::getData() {
+inline Message::UnionData Message::getData() {
 	return m_data;
 }
 

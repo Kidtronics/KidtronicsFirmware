@@ -19,7 +19,7 @@ private:
 	int getHeaderEndIdx();
 	sp::DataType getDataTypeFromHeader(char* headerEndPtr);
 	sp::DataType str2DataType(char* str);
-	void* getParsedDataFromMessageBody(char* bodyStartPtr, sp::DataType dataType);
+	bool parseMessageBodyAndBuildMessage(char* bodyStartPtr, sp::DataType dataType);
 public:
 	/** Constructor that takes message from Serial port, message will NOT be copied. */
 	MessageParser();

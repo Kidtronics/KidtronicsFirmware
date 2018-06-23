@@ -37,12 +37,7 @@ bool MessageParser::parse(char* message) {
 		return false;
 	}
 
-	void* parsedData = getParsedDataFromMessageBody(m_message + headerEndIdx + 1, dataType);
-	if (parsedData == nullptr) {
-		return false;
-	}
-	m_parsedMessage = Message(parsedData, dataType);
-	return true;
+    return parseMessageBodyAndBuildMessage(m_message + headerEndIdx + 1, dataType);
 }
 
 Message MessageParser::getParsedMessage() {
@@ -113,31 +108,41 @@ DataType MessageParser::getDataTypeFromHeader(char* headerEndPtr) {
  *  dataType: dataType that we parse the data into.
  *  return: return the pointer to parsed data value.
  */
-void* MessageParser::getParsedDataFromMessageBody(char* bodyStartPtr, DataType dataType) {
+bool MessageParser::parseMessageBodyAndBuildMessage(char* bodyStartPtr, DataType dataType) {
 	unsigned int bodyLength = strlen(bodyStartPtr) - CHECKSUM_END_CHAR_SIZE;
 	char messageBody[MAX_MESSAGE_BODY_SIZE];
 
 	memcpy(messageBody, bodyStartPtr, bodyLength);
 	messageBody[bodyLength] = '\0';
 
-	char* str = (char*) malloc(bodyLength + 1);
+    Message::UnionData unionData;
 
 	switch (dataType) {
-	case INTEGER:
-		return new int(atoi(messageBody));
-	case FLOAT:
-		return new float(atof(messageBody));
-	case DOUBLE:
-		return new double(atof(messageBody));
-	case BOOL:
-		return new bool(atoi(messageBody) == 1);
-	case STRING:
-		strcpy(str, messageBody);
-		return str;
-	default:
-		break;
+		case INTEGER:
+        	unionData.INTEGER = atoi(messageBody);
+			m_parsedMessage = Message(unionData, dataType);
+            break;
+		case FLOAT:
+        	unionData.FLOAT = atof(messageBody);
+        	m_parsedMessage = Message(unionData, dataType);
+            break;
+		case DOUBLE:
+        	unionData.DOUBLE = atof(messageBody);
+            m_parsedMessage = Message(unionData, dataType);
+            break;
+		case BOOL:
+            unionData.BOOL = atoi(messageBody) == 1;
+            m_parsedMessage = Message(unionData, dataType);
+            break;
+		case STRING:
+            unionData.CHAR_PTR = messageBody;
+            m_parsedMessage = Message(unionData, dataType);
+            break;
+		default:
+            return false;
+			break;
 	}
-	return nullptr;
+	return true;
 }
 
 /**
