@@ -19,6 +19,7 @@ using namespace sp;
 char calculateCheckSum(char* str);
 void appendChecksumAndEndingCharacter(char* message);
 void printMessage(Message msg);
+void variableToStringTest();
 
 int main() {
 	char intMsg[30] = "<INT\r2934\\";
@@ -91,4 +92,29 @@ char calculateCheckSum(char* str) {
 		str++;
 	}
 	return checksum;
+}
+
+void variableToStringTest()
+{
+    StringVariable strVar;
+    int input = 1234567890;
+    float floatInput = 1.23324f;
+    double doubleInput = 1.23234f;
+    bool boolInput = true;
+    char* intBuffer = (char*) malloc(30);
+    char* boolBuffer = (char*) malloc(30);
+    char* floatBuffer = (char*) malloc(30);
+    char* doubleBuffer = (char*) malloc(30);
+    strVar.Serialize(input, intBuffer);
+    strVar.Serialize(boolInput, boolBuffer);
+    strVar.Serialize(floatInput, floatBuffer);
+    strVar.Serialize(doubleInput, doubleBuffer);
+    printf("%s\n", intBuffer);
+    printf("%s\n", boolBuffer);
+    printf("%s\n", floatBuffer);
+    printf("%s\n", doubleBuffer);
+    free(intBuffer);
+    free(boolBuffer);
+    free(floatBuffer);
+    free(doubleBuffer);
 }
