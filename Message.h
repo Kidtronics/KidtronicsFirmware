@@ -25,7 +25,12 @@ private:
 public:
 	Message(UnionData data, sp::DataType dataType);
 	Message();
-	UnionData getData();
+	UnionData getUnionData();
+    int getIntData();
+    float getFloatData();
+    double getDoubleData();
+    char* getStringData();
+    bool getBoolData();
 	sp::DataType getDataType();
 };
 
@@ -34,8 +39,28 @@ inline Message::Message() {
 	m_dataType = sp::UNSUPPORTED_TYPE;
 }
 
-inline Message::UnionData Message::getData() {
+inline Message::UnionData Message::getUnionData() {
 	return m_data;
+}
+
+inline int Message::getIntData() {
+    return m_data.INTEGER;
+}
+
+inline float Message::getFloatData() {
+    return m_data.FLOAT;
+}
+
+inline double Message::getDoubleData() {
+    return m_data.DOUBLE;
+}
+
+inline char* Message::getStringData() {
+    return m_data.CHAR_PTR;
+}
+
+inline bool Message::getBoolData() {
+    return m_data.BOOL;
 }
 
 inline sp::DataType Message::getDataType() {

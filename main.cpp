@@ -53,19 +53,19 @@ void printMessage(Message msg) {
     cout << "Value: ";
     switch (msg.getDataType()) {
         case INTEGER:
-            cout << ((Message::UnionData) msg.getData()).INTEGER << endl;
+            cout << msg.getIntData()<< endl;
             break;
         case DOUBLE:
-            cout << ((Message::UnionData) msg.getData()).DOUBLE << endl;
+            cout << msg.getDoubleData() << endl;
             break;
         case FLOAT:
-            cout << ((Message::UnionData) msg.getData()).FLOAT << endl;
+            cout << msg.getFloatData() << endl;
             break;
         case STRING:
-            cout << ((Message::UnionData) msg.getData()).CHAR_PTR << endl;
+            cout << msg.getStringData() << endl;
             break;
         case BOOL:
-            cout << ((Message::UnionData) msg.getData()).BOOL << endl;
+            cout << msg.getBoolData() << endl;
             break;
         default:
             break;
