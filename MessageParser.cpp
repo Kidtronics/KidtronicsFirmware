@@ -106,7 +106,7 @@ DataType MessageParser::getDataTypeFromHeader(char* headerEndPtr) {
 /**
  *  bodyStartPtr: pinter pointing at the start of the message body.
  *  dataType: dataType that we parse the data into.
- *  return: return the pointer to parsed data value.
+ *  return: return bool, true on success.
  */
 bool MessageParser::parseMessageBodyAndBuildMessage(char* bodyStartPtr, DataType dataType) {
 	unsigned int bodyLength = strlen(bodyStartPtr) - CHECKSUM_END_CHAR_SIZE;
