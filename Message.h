@@ -26,9 +26,14 @@ public:
 private:
 	UnionData m_data;
 	sp::DataType m_dataType;
+    void copy(const Message &other);
 public:
 	Message(UnionData data, sp::DataType dataType);
+    Message(const Message &other);
 	Message();
+    ~Message();
+    
+    Message& operator=(const Message &other);
     
     /** Get parsed value as UnionData. This function is not convenient to use. */
 	UnionData getUnionData();
