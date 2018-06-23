@@ -33,11 +33,13 @@ int main() {
     const int size = 8;
     char* arr[size] = {intMsg, floatMsg, doubleMsg, strMsg, boolMsg, unsupported, unsupported2, unsupported3};
     
-    MessageParser parser = MessageParser();
     for (int i=0; i<size; i++) {
-//    int i = 3;
         appendChecksumAndEndingCharacter(arr[i]);
-
+    }
+    
+    MessageParser parser = MessageParser();
+    
+    for (int i=0; i<size; i++) {
         if(parser.parse(arr[i])) {
             Message message = parser.getParsedMessage();
             printMessage(message);
