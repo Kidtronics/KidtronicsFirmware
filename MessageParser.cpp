@@ -21,7 +21,7 @@ MessageParser::MessageParser() {
 	m_parsedMessage = Message();
 }
 
-bool MessageParser::parse(char* message) {
+bool MessageParser::parse(const char* message) {
 	m_message = message;
 
 	if (isCorrupted()) {
@@ -32,7 +32,7 @@ bool MessageParser::parse(char* message) {
 		return false;
 	}
 
-	DataType dataType = getDataTypeFromHeader(this->m_message + headerEndIdx);
+	DataType dataType = getDataTypeFromHeader(m_message + headerEndIdx);
 	if (dataType == UNSUPPORTED_TYPE) {
 		return false;
 	}
@@ -45,7 +45,7 @@ Message MessageParser::getParsedMessage() {
 }
 
 bool MessageParser::isCorrupted() {
-	char* ptr = m_message;
+	const char* ptr = m_message;
 	char checksum = *ptr;
 	ptr++;
 	while (*ptr != '\0') {
@@ -63,7 +63,7 @@ bool MessageParser::isCorrupted() {
  * If HEADER_SEPARATOR cannot be found, return -1.
  */
 int MessageParser::getHeaderEndIdx() {
-	char* ptr = m_message;
+	const char* ptr = m_message;
 	int i = 0;
 	while (ptr[i] != '\0') {
 		if (ptr[i] == HEADER_SEPARATOR) {
@@ -82,7 +82,7 @@ int MessageParser::getHeaderEndIdx() {
  * returns: return DataType that header specify,
  * return UNSUPPORTED_TYPE when DataType is not supported.
  */
-DataType MessageParser::getDataTypeFromHeader(char* headerEndPtr) {
+DataType MessageParser::getDataTypeFromHeader(const char* headerEndPtr) {
 	const char* ptr;
 	if (*m_message == START_CHAR) {
 		ptr = m_message + 1;
@@ -108,7 +108,7 @@ DataType MessageParser::getDataTypeFromHeader(char* headerEndPtr) {
  *  dataType: dataType that we parse the data into.
  *  return: return bool, true on success.
  */
-bool MessageParser::parseMessageBodyAndBuildMessage(char* bodyStartPtr, DataType dataType) {
+bool MessageParser::parseMessageBodyAndBuildMessage(const char* bodyStartPtr, DataType dataType) {
 	unsigned int bodyLength = strlen(bodyStartPtr) - CHECKSUM_END_CHAR_SIZE;
 	char messageBody[MAX_MESSAGE_BODY_SIZE];
 
@@ -149,7 +149,7 @@ bool MessageParser::parseMessageBodyAndBuildMessage(char* bodyStartPtr, DataType
  * str: input string that represents data type.
  * returns: return the data type.
  */
-DataType MessageParser::str2DataType(char* str) {
+DataType MessageParser::str2DataType(const char* str) {
 	for (int i=0; i<NUM_SUPPORTED_DATA_TYPE; i++) {
 			if (strcmp(DATA_TYPE_STRINGS[i], str) == 0) {
 				return (DataType) i;

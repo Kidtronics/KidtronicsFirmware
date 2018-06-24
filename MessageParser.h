@@ -13,13 +13,13 @@
 
 class MessageParser {
 private:
-	char* m_message;
+	const char* m_message;
 	Message m_parsedMessage;
 
 	int getHeaderEndIdx();
-	sp::DataType getDataTypeFromHeader(char* headerEndPtr);
-	sp::DataType str2DataType(char* str);
-	bool parseMessageBodyAndBuildMessage(char* bodyStartPtr, sp::DataType dataType);
+	sp::DataType getDataTypeFromHeader(const char* headerEndPtr);
+	sp::DataType str2DataType(const char* str);
+	bool parseMessageBodyAndBuildMessage(const char* bodyStartPtr, sp::DataType dataType);
 public:
 	/** Constructor that takes message from Serial port, message will NOT be copied. */
 	MessageParser();
@@ -28,7 +28,7 @@ public:
 	 * Error check the message and parse it into headers and data.
 	 * returns true if parsing was successful, and false otherwise.
 	 */
-	bool parse(char* message);
+	bool parse(const char* message);
 
 	/** Get parsed message. */
 	Message getParsedMessage();

@@ -38,6 +38,7 @@ int main() {
     
     MessageParser parser = MessageParser();
     
+    for (int j=0; j<100; j++) {
     for (int i=0; i<size; i++) {
         if(parser.parse(arr[i])) {
             Message message = parser.getParsedMessage();
@@ -46,6 +47,7 @@ int main() {
         else {
             cout << "unsupported" << endl;
         }
+    }
     }
 }
 
