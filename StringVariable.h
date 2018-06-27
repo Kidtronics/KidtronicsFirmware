@@ -18,19 +18,11 @@ const int DATA_STRING_SIZE = 11;
 
 class StringVariable {
 public:
-	StringVariable();
     //input a variable and it will serialize it
     template <typename T>
     void Serialize(char* buffer, T &input);
     void SerializeString(char* buffer, char* input);
 private:
-    //convert int to c string
-    void IntToString(char* buffer, int input);
-    //convert boolean to c string
-    void BoolToString(char* buffer, bool input);
-    //serialize float or double to string
-    template<typename T>
-    void FloatAndDoubleToString(char* buffer, T& input);
     //checksum
     char calculateCheckSum(char* str);
     //get data type

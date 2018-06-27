@@ -11,6 +11,7 @@
 #include "MessageConstants.h"
 #include "MessageParser.h"
 #include "Message.h"
+#include "StringVariable.h"
 
 
 using namespace std;
@@ -47,6 +48,7 @@ int main() {
             cout << "unsupported" << endl;
         }
     }
+    variableToStringTest();
 }
 
 void printMessage(Message msg) {
@@ -100,7 +102,7 @@ void variableToStringTest()
     int input = 1234567890;
     float floatInput = 1.23324f;
     double doubleInput = 1.23234f;
-    bool boolInput = true;
+    bool boolInput = false;
     char strInput[15];
     snprintf(strInput, sizeof(strInput),"hello world");
     char* intBuffer = (char*) malloc(30);

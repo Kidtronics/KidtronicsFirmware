@@ -15,54 +15,21 @@
 using namespace std;
 using namespace sp;
 
-StringVariable::StringVariable() {
-    //empty constructor
-}
-
-void StringVariable::IntToString(char* buffer, int input)
-{
-	snprintf(buffer, sizeof(buffer), "%d", input);
-}
-
-void StringVariable::BoolToString(char* buffer, bool input)
-{
-	if(input)
-	{
-		buffer[0] = '1';
-	}
-	else
-	{
-		buffer[0] = '0';
-	}
-	buffer[1] = '\0';
-}
-
-template <typename T>
-void StringVariable::FloatAndDoubleToString(char* buffer, T& input)
-{
-    if(typeid(input) == typeid(double) || typeid(input) == typeid(float)){
-        snprintf(buffer, sizeof(buffer), "%f", input);
-    }
-}
 template <typename T>
 void StringVariable::DataToString(char* buffer, T &input, DataType dataType)
 {
     switch(dataType)
     {
         case DataType::INTEGER:
-            IntToString(buffer, input);
+            snprintf(buffer, sizeof(buffer), "%d", input);
             break;
         case DataType::BOOL:
-            BoolToString(buffer, input);
+            buffer[0] = input+'0';
+            buffer[1] = '\0';
             break;
         case DataType::FLOAT:
-            FloatAndDoubleToString(buffer, input);
-            break;
         case DataType::DOUBLE:
-            FloatAndDoubleToString(buffer, input);
-            break;
-        case DataType::STRING:
-            snprintf(buffer, sizeof(buffer), "%s", input);
+            snprintf(buffer, sizeof(buffer), "%f", input);
             break;
         case DataType::UNSUPPORTED_TYPE:
             break;
@@ -140,8 +107,6 @@ DataType StringVariable::getDataType(T &input)
     }
 }
 
-template void StringVariable::FloatAndDoubleToString<float>(char* buffer, float&input);
-template void StringVariable::FloatAndDoubleToString<double>(char* buffer, double&input);
 
 //template DataType StringVariable::getDataType<int>(int &input);
 //template DataType StringVariable::getDataType<bool>(bool &input);
