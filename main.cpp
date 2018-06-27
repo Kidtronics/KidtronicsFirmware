@@ -101,20 +101,27 @@ void variableToStringTest()
     float floatInput = 1.23324f;
     double doubleInput = 1.23234f;
     bool boolInput = true;
+    char strInput[15];
+    snprintf(strInput, sizeof(strInput),"hello world");
     char* intBuffer = (char*) malloc(30);
     char* boolBuffer = (char*) malloc(30);
     char* floatBuffer = (char*) malloc(30);
     char* doubleBuffer = (char*) malloc(30);
-    strVar.Serialize(input, intBuffer);
-    strVar.Serialize(boolInput, boolBuffer);
-    strVar.Serialize(floatInput, floatBuffer);
-    strVar.Serialize(doubleInput, doubleBuffer);
+    char* stringBuffer = (char*) malloc(30);
+    strVar.Serialize(intBuffer,input);
+    strVar.Serialize(boolBuffer,boolInput);
+    strVar.Serialize(floatBuffer,floatInput);
+    strVar.Serialize(doubleBuffer,doubleInput);
+    strVar.SerializeString(stringBuffer, strInput);
+    
     printf("%s\n", intBuffer);
     printf("%s\n", boolBuffer);
     printf("%s\n", floatBuffer);
     printf("%s\n", doubleBuffer);
+    printf("%s\n", stringBuffer);
     free(intBuffer);
     free(boolBuffer);
     free(floatBuffer);
     free(doubleBuffer);
+    free(stringBuffer);
 }

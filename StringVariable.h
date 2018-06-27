@@ -9,7 +9,7 @@
 #define STRINGVARIABLE_H_
 #include "StringVariable.h"
 #include "MessageConstants.h"
-#include <cstdlib>
+#include "stdlib.h"
 #include "stdio.h"
 #include "string.h"
 #include <typeinfo>
@@ -19,60 +19,28 @@ const int DATA_STRING_SIZE = 11;
 class StringVariable {
 public:
 	StringVariable();
+    //input a variable and it will serialize it
     template <typename T>
-    void Serialize(T &input, char* buffer);
-    
-    void IntToString(int input, char* buffer);
-    void BoolToString(bool input, char* buffer);
-    template<typename T>
-    void FloatAndDoubleToString(T& input, char* buffer);
+    void Serialize(char* buffer, T &input);
+    void SerializeString(char* buffer, char* input);
 private:
-    
+    //convert int to c string
+    void IntToString(char* buffer, int input);
+    //convert boolean to c string
+    void BoolToString(char* buffer, bool input);
+    //serialize float or double to string
+    template<typename T>
+    void FloatAndDoubleToString(char* buffer, T& input);
+    //checksum
+    char calculateCheckSum(char* str);
+    //get data type
+    template<typename T>
+    sp::DataType getDataType(T &input);
+    //return data in string
+    template<typename T>
+    void DataToString(char* buffer, T &input, sp::DataType dataType);
 };
 
-//serialize float or double to string
-template <typename T>
-void StringVariable::FloatAndDoubleToString(T& input, char* buffer)
-{
-    if(typeid(input) == typeid(double) || typeid(input) == typeid(float)){
-        snprintf(buffer, sizeof(buffer), "%f", input);
-    }
-}
 
-//input a variable and it will serialize it
-template <typename T>
-void StringVariable::Serialize(T &input, char* buffer)
-{
-    *buffer = '\0';
-    strncat(buffer, &sp::START_CHAR,1);
-    char dataString[DATA_STRING_SIZE];
-    if(typeid(input) == typeid(int))
-    {
-        strcat(buffer, sp::DATA_TYPE_STRINGS[sp::DataType::INTEGER]);
-        strncat(buffer, &sp::HEADER_SEPARATOR,1);
-        IntToString(input, dataString);
-    }
-    else if(typeid(input) == typeid(bool))
-    {
-        strcat(buffer, sp::DATA_TYPE_STRINGS[sp::DataType::BOOL]);
-        strncat(buffer, &sp::HEADER_SEPARATOR,1);
-        BoolToString(input, dataString);
-    }
-    else if(typeid(input) == typeid(double))
-    {
-        strcat(buffer, sp::DATA_TYPE_STRINGS[sp::DataType::DOUBLE]);
-        strncat(buffer, &sp::HEADER_SEPARATOR,1);
-        FloatAndDoubleToString(input, dataString);
-    }
-    else if(typeid(input) == typeid(float))
-    {
-        strcat(buffer, sp::DATA_TYPE_STRINGS[sp::DataType::FLOAT]);
-        strncat(buffer, &sp::HEADER_SEPARATOR,1);
-        FloatAndDoubleToString(input, dataString);
-    }
-    
-    strcat(buffer, dataString);
-    strncat(buffer, &sp::ESCAPE_CHAR,1);
-}
 
 #endif /* STRINGVARIABLE_H_ */
