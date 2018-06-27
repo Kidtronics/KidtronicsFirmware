@@ -13,7 +13,6 @@
 #include "Message.h"
 #include "StringVariable.h"
 
-
 using namespace std;
 using namespace sp;
 
@@ -35,11 +34,14 @@ int main() {
     const int size = 8;
     char* arr[size] = {intMsg, floatMsg, doubleMsg, strMsg, boolMsg, unsupported, unsupported2, unsupported3};
     
-    MessageParser parser = MessageParser();
     for (int i=0; i<size; i++) {
-//    int i = 3;
         appendChecksumAndEndingCharacter(arr[i]);
-
+    }
+    
+    MessageParser parser = MessageParser();
+    
+    for (int j=0; j<100; j++) {
+    for (int i=0; i<size; i++) {
         if(parser.parse(arr[i])) {
             Message message = parser.getParsedMessage();
             printMessage(message);
@@ -48,6 +50,7 @@ int main() {
             cout << "unsupported" << endl;
         }
     }
+      
     variableToStringTest();
 }
 
