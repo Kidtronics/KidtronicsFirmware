@@ -12,7 +12,7 @@
 #include "string.h"
 
 using namespace sp;
-using namespace std;
+using namespace std; // @suppress("Symbol is not resolved")
 
 const unsigned int CHECKSUM_END_CHAR_SIZE = 3;
 

@@ -16,7 +16,7 @@ namespace sp {
     extern const char DELIMITER;
     extern const unsigned int MAX_HEADER_SIZE;
     extern const unsigned int MAX_MESSAGE_BODY_SIZE;
-    extern const unsigned int MAX_MESSAGE_SIZE;
+    const unsigned int MAX_MESSAGE_SIZE = 164;
     
     enum DataType {
         INTEGER,

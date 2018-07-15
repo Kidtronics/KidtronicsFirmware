@@ -14,7 +14,6 @@ namespace sp {
     const char DELIMITER = ',';
     const unsigned int MAX_HEADER_SIZE = 32;
     const unsigned int MAX_MESSAGE_BODY_SIZE = 128;
-    const unsigned int MAX_MESSAGE_SIZE = 1+MAX_HEADER_SIZE+MAX_MESSAGE_BODY_SIZE+3;
     
     const unsigned int NUM_SUPPORTED_DATA_TYPE = 5;
     const char* DATA_TYPE_STRINGS[NUM_SUPPORTED_DATA_TYPE] = {
