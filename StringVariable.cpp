@@ -41,17 +41,17 @@ void StringVariable::DataToString(char* buffer, T &input, DataType dataType)
 template <typename T>
 void StringVariable::Serialize(char* buffer, T &input)
 {
-    buffer[0] = sp::START_CHAR;
+    buffer[0] = START_CHAR;
     buffer[1] = '\0';
     DataType dataType = getDataType<T>(input);
     
-    strcat(buffer, sp::DATA_TYPE_STRINGS[dataType]);
-    strncat(buffer, &sp::HEADER_SEPARATOR,1);
+    strcat(buffer, DATA_TYPE_STRINGS[dataType]);
+    strncat(buffer, &HEADER_SEPARATOR,1);
     char dataString[DATA_STRING_SIZE];
     DataToString(dataString, input, dataType);
     
-    strcat(buffer, dataString);
-    strncat(buffer, &sp::ESCAPE_CHAR,1);
+    strncat(buffer, dataString, MAX_HEADER_SIZE);
+    strncat(buffer, &ESCAPE_CHAR,1);
     char checkSum = calculateCheckSum(buffer);
     strncat(buffer, &checkSum, 1);
     strncat(buffer, &END_CHAR, 1);
@@ -59,12 +59,12 @@ void StringVariable::Serialize(char* buffer, T &input)
 
 void StringVariable::SerializeString(char* buffer, char* input)
 {
-    buffer[0] = sp::START_CHAR;
+    buffer[0] = START_CHAR;
     buffer[1] = '\0';
-    strcat(buffer, sp::DATA_TYPE_STRINGS[DataType::STRING]);
-    strncat(buffer, &sp::HEADER_SEPARATOR,1);
-    strcat(buffer, input);
-    strncat(buffer, &sp::ESCAPE_CHAR,1);
+    strncat(buffer, DATA_TYPE_STRINGS[DataType::STRING], MAX_HEADER_SIZE);
+    strncat(buffer, &HEADER_SEPARATOR,1);
+    strncat(buffer, input, MAX_MESSAGE_BODY_SIZE);
+    strncat(buffer, &ESCAPE_CHAR,1);
     char checkSum = calculateCheckSum(buffer);
     strncat(buffer, &checkSum, 1);
     strncat(buffer, &END_CHAR, 1);
