@@ -21,6 +21,7 @@ private:
 	sp::DataType getDataTypeFromHeader(const char* headerEndPtr);
 	sp::DataType str2DataType(const char* str);
 	bool parseMessageBodyAndBuildMessage(const char* bodyStartPtr, sp::DataType dataType);
+    unsigned int calculateMessageLength();
 public:
 	/** Constructor that takes message from Serial port, message will NOT be copied. */
 	MessageParser();
@@ -35,7 +36,7 @@ public:
 	Message getParsedMessage();
 
 	/** Check if the data is corrupted. */
-	bool isCorrupted();
+//    bool isCorrupted();
 };
 
 

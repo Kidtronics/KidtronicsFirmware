@@ -51,9 +51,9 @@ void Serialize(char* buffer, T input, DataType dataType)
     DataToString(dataString, input, dataType);
     
     strncat(buffer, dataString, MAX_HEADER_SIZE);
-    strncat(buffer, &ESCAPE_CHAR,1);
-    char checkSum = calculateCheckSum(buffer);
-    strncat(buffer, &checkSum, 1);
+//    strncat(buffer, &ESCAPE_CHAR,1);
+//    char checkSum = calculateCheckSum(buffer);
+//    strncat(buffer, &checkSum, 1);
     strncat(buffer, &END_CHAR, 1);
 }
 
@@ -64,9 +64,9 @@ void SerializeString(char* buffer, char* input)
     strncat(buffer, DATA_TYPE_STRINGS[DataType::STRING], MAX_HEADER_SIZE);
     strncat(buffer, &HEADER_SEPARATOR,1);
     strncat(buffer, input, MAX_MESSAGE_BODY_SIZE);
-    strncat(buffer, &ESCAPE_CHAR,1);
-    char checkSum = calculateCheckSum(buffer);
-    strncat(buffer, &checkSum, 1);
+//    strncat(buffer, &ESCAPE_CHAR,1);
+//    char checkSum = calculateCheckSum(buffer);
+//    strncat(buffer, &checkSum, 1);
     strncat(buffer, &END_CHAR, 1);
 }
 

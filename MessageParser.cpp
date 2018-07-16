@@ -14,7 +14,7 @@
 using namespace sp;
 using namespace std; // @suppress("Symbol is not resolved")
 
-const unsigned int CHECKSUM_END_CHAR_SIZE = 3;
+const unsigned int CHECKSUM_END_CHAR_SIZE = 1;
 
 MessageParser::MessageParser() {
 	m_message = nullptr;
@@ -24,9 +24,7 @@ MessageParser::MessageParser() {
 bool MessageParser::parse(const char* message) {
 	m_message = message;
 
-	if (isCorrupted()) {
-		return false;
-	}
+    m_messageLength = calculateMessageLength();
 	int headerEndIdx = getHeaderEndIdx();
 	if (headerEndIdx == -1) {
 		return false;
@@ -44,20 +42,29 @@ Message MessageParser::getParsedMessage() {
 	return m_parsedMessage;
 }
 
-bool MessageParser::isCorrupted() {
-	const char* ptr = m_message;
-	char checksum = *ptr;
-	ptr++;
-    while (*(ptr-1) == ESCAPE_CHAR || *ptr != '\0') {
-		checksum ^= *ptr;
-		ptr++;
-	}
-    m_messageLength = ptr - m_message;
-	return *ptr != 0x00;
-}
+//bool MessageParser::isCorrupted() {
+//    const char* ptr = m_message;
+//    char checksum = *ptr;
+//    ptr++;
+//    while (*(ptr-1) == ESCAPE_CHAR || *ptr != '\0') {
+//        checksum ^= *ptr;
+//        ptr++;
+//    }
+//    m_messageLength = ptr - m_message;
+//    return *ptr != 0x00;
+//}
 
 
 ////////////////Private Functions/////////////////
+
+/** Returns the length of the message. */
+unsigned int MessageParser::calculateMessageLength() {
+    const char* ptr = m_message + 1;
+    while (*(ptr-1) == ESCAPE_CHAR || *ptr != sp::END_CHAR) {
+        ptr++;
+    }
+    return ptr - m_message + 1;
+}
 
 /**
  * returns: return the index to the end of message header, pointing at HEADER_SEPARATOR.
