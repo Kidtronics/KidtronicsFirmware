@@ -11,7 +11,7 @@
 #include "MessageConstants.h"
 #include "MessageParser.h"
 #include "Message.h"
-#include "StringVariable.h"
+#include "SerializerUtils.h"
 
 using namespace std;
 using namespace sp;
@@ -22,7 +22,7 @@ void printMessage(Message msg);
 void variableToStringTest();
 
 int main() {
-	char intMsg[30] = "<INT\r2934\\";
+	char intMsg[30] = "<INT\r-2533434\\";
     char floatMsg[30] = "<FLOAT\r34.284\\";
     char doubleMsg[30] = "<DOUBLE\r76.84937283\\";
     char strMsg[30] = "<STR\rThis is a test\\";
@@ -40,16 +40,15 @@ int main() {
     
     MessageParser parser = MessageParser();
     
-    for (int j=0; j<100; j++) {
-    	for (int i=0; i<size; i++) {
-        	if(parser.parse(arr[i])) {
-            	Message message = parser.getParsedMessage();
-            	printMessage(message);
-        	}
-        	else {
-            	cout << "unsupported" << endl;
-        	}
-    	}
+
+    for (int i=0; i<size; i++) {
+        if(parser.parse(arr[i])) {
+            Message message = parser.getParsedMessage();
+            printMessage(message);
+        }
+        else {
+            cout << "unsupported" << endl;
+        }
     }
     variableToStringTest();
 }
@@ -101,7 +100,6 @@ char calculateCheckSum(char* str) {
 
 void variableToStringTest()
 {
-    StringVariable strVar;
     int input = 1234567890;
     float floatInput = 1.23324f;
     double doubleInput = 1.23234f;
@@ -113,11 +111,11 @@ void variableToStringTest()
     char* floatBuffer = (char*) malloc(30);
     char* doubleBuffer = (char*) malloc(30);
     char* stringBuffer = (char*) malloc(30);
-    strVar.Serialize(intBuffer,input);
-    strVar.Serialize(boolBuffer,boolInput);
-    strVar.Serialize(floatBuffer,floatInput);
-    strVar.Serialize(doubleBuffer,doubleInput);
-    strVar.SerializeString(stringBuffer, strInput);
+    Serialize(intBuffer,input, INTEGER);
+    Serialize(boolBuffer,boolInput, BOOL);
+    Serialize(floatBuffer,floatInput, FLOAT);
+    Serialize(doubleBuffer,doubleInput, DOUBLE);
+    SerializeString(stringBuffer, strInput);
     
     printf("%s\n", intBuffer);
     printf("%s\n", boolBuffer);

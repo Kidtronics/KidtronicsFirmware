@@ -15,6 +15,7 @@ class MessageParser {
 private:
 	const char* m_message;
 	Message m_parsedMessage;
+    unsigned int m_messageLength;
 
 	int getHeaderEndIdx();
 	sp::DataType getDataTypeFromHeader(const char* headerEndPtr);
