@@ -1,6 +1,9 @@
 /*
  * InputConnection.h
  *
+ * This class manage a buffer from UART. New data will be stored into a buffer.
+ * It parses the buffer into message when possible.
+ *
  *  Created on: Jul 15, 2018
  *      Author: baixiao
  */

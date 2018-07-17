@@ -19,6 +19,7 @@ const unsigned int CHECKSUM_END_CHAR_SIZE = 1;
 MessageParser::MessageParser() {
 	m_message = nullptr;
 	m_parsedMessage = Message();
+	m_messageLength = 0;
 }
 
 bool MessageParser::parse(const char* message) {

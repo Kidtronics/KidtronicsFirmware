@@ -21,7 +21,7 @@ void DataToString(char* buffer, T &input, DataType dataType)
     switch(dataType)
     {
         case DataType::INTEGER:
-            snprintf(buffer, sizeof(buffer), "%d", input);
+            snprintf(buffer, sp::MAX_MESSAGE_BODY_SIZE, "%d", input);
             break;
         case DataType::BOOL:
             buffer[0] = input+'0';
@@ -29,7 +29,7 @@ void DataToString(char* buffer, T &input, DataType dataType)
             break;
         case DataType::FLOAT:
         case DataType::DOUBLE:
-            snprintf(buffer, sizeof(buffer), "%f", input);
+            snprintf(buffer, sp::MAX_MESSAGE_BODY_SIZE, "%f", input);
             break;
         case DataType::UNSUPPORTED_TYPE:
             break;
