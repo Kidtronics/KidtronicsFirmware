@@ -32,6 +32,11 @@ var::var(const var& other) {
     copy(other);
 }
 
+var::var(bool boolean) {
+    m_integerValue = int(boolean);
+    m_currentType = INTEGER;
+}
+
 /** Free up allocated string. */
 var::~var() {
     if (m_stringValue != nullptr) {
@@ -192,6 +197,39 @@ var operator-(var lhs, const var& rhs) {
     else {
         return lhs;
     }
+}
+
+var& var::operator++() {
+    if (m_currentType == VarType::INTEGER) {
+        m_integerValue += 1;
+    }
+    return *this;
+}
+
+var var::operator++(int) {
+    var tmp(*this);
+    operator++();
+    return tmp;
+}
+
+var& var::operator--() {
+    if (m_currentType == VarType::INTEGER) {
+        m_integerValue -= 1;
+    }
+    return *this;
+}
+
+var var::operator--(int) {
+    var tmp(*this);
+    operator--();
+    return tmp;
+}
+
+var::operator bool() const {
+    if (m_currentType == INTEGER) {
+        return m_integerValue != 0;
+    }
+    return false;
 }
 
 void var::copy(const var& other) {

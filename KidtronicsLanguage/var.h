@@ -33,6 +33,8 @@ public:
     var(int integer);
     // Construct string var.
     var(const char* string);
+    // Copy construct bool var.
+    var(bool boolean);
     // Copy construct var.
     var(const var& otherVar);
     
@@ -53,6 +55,22 @@ public:
     // Arithmatic operators.
     friend var operator+(var lhs, const var& rhs);
     friend var operator-(var lhs, const var& rhs);
+    
+    // Unary operators.
+    // Prefix increment operator.
+    var& operator++();
+    
+    // Posfix increment operator.
+    var operator++(int);
+    
+    // Prefix decrement operator.
+    var& operator--();
+    
+    // Posfix decrement operator.
+    var operator--(int);
+    
+    // Conversion to bool.
+    explicit operator bool() const;
 };
 
 #endif /* var_h */
