@@ -12,21 +12,20 @@
 #include "string.h"
 
 using namespace sp;
-using namespace std;
+using namespace std; // @suppress("Symbol is not resolved")
 
-const unsigned int CHECKSUM_END_CHAR_SIZE = 3;
+const unsigned int CHECKSUM_END_CHAR_SIZE = 1;
 
 MessageParser::MessageParser() {
 	m_message = nullptr;
 	m_parsedMessage = Message();
+	m_messageLength = 0;
 }
 
 bool MessageParser::parse(const char* message) {
 	m_message = message;
 
-	if (isCorrupted()) {
-		return false;
-	}
+    m_messageLength = calculateMessageLength();
 	int headerEndIdx = getHeaderEndIdx();
 	if (headerEndIdx == -1) {
 		return false;
@@ -44,19 +43,29 @@ Message MessageParser::getParsedMessage() {
 	return m_parsedMessage;
 }
 
-bool MessageParser::isCorrupted() {
-	const char* ptr = m_message;
-	char checksum = *ptr;
-	ptr++;
-	while (*ptr != '\0') {
-		checksum ^= *ptr;
-		ptr++;
-	}
-	return *ptr != 0x00;
-}
+//bool MessageParser::isCorrupted() {
+//    const char* ptr = m_message;
+//    char checksum = *ptr;
+//    ptr++;
+//    while (*(ptr-1) == ESCAPE_CHAR || *ptr != '\0') {
+//        checksum ^= *ptr;
+//        ptr++;
+//    }
+//    m_messageLength = ptr - m_message;
+//    return *ptr != 0x00;
+//}
 
 
 ////////////////Private Functions/////////////////
+
+/** Returns the length of the message. */
+unsigned int MessageParser::calculateMessageLength() {
+    const char* ptr = m_message + 1;
+    while (*(ptr-1) == ESCAPE_CHAR || *ptr != sp::END_CHAR) {
+        ptr++;
+    }
+    return ptr - m_message + 1;
+}
 
 /**
  * returns: return the index to the end of message header, pointing at HEADER_SEPARATOR.
@@ -64,15 +73,14 @@ bool MessageParser::isCorrupted() {
  */
 int MessageParser::getHeaderEndIdx() {
 	const char* ptr = m_message;
-	int i = 0;
-	while (ptr[i] != '\0') {
+    int i = 0;
+    for (; i<m_messageLength; i++) {
 		if (ptr[i] == HEADER_SEPARATOR) {
 			if (i > 0 && ptr[i - 1] == ESCAPE_CHAR) {
 				continue;
 			}
 			break;
 		}
-		i++;
 	}
 	return ptr[i] == '\0' ? -1 : i;
 }
@@ -109,7 +117,7 @@ DataType MessageParser::getDataTypeFromHeader(const char* headerEndPtr) {
  *  return: return bool, true on success.
  */
 bool MessageParser::parseMessageBodyAndBuildMessage(const char* bodyStartPtr, DataType dataType) {
-	unsigned int bodyLength = strlen(bodyStartPtr) - CHECKSUM_END_CHAR_SIZE;
+	size_t bodyLength = m_messageLength - (size_t)(bodyStartPtr - m_message) - CHECKSUM_END_CHAR_SIZE;
 	char messageBody[MAX_MESSAGE_BODY_SIZE];
 
 	memcpy(messageBody, bodyStartPtr, bodyLength);
