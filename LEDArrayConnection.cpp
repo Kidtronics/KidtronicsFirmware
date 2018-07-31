@@ -52,6 +52,17 @@ bool LEDArrayConnection::setLEDArrayState(char arrayState) {
 	return sendLEDState();
 }
 
+bool LEDArrayConnection::setNumberOfLEDsOn(unsigned int numLedsOn) {
+	if (numLedsOn > NUMBER_LEDS) {
+		numLedsOn = NUMBER_LEDS;
+	}
+	m_LEDState = 0x00;
+	for (int i=0; i<numLedsOn; i++) {
+		setLEDState(i, true);
+	}
+	return sendLEDState();
+}
+
 bool LEDArrayConnection::sendLEDState() {
 	if (m_serial == nullptr) {
 		return false;

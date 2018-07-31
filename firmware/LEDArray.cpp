@@ -42,17 +42,21 @@ void serialEvent() {
 #elif defined(LED_ARRAY_MASTER)
 
 #include "../SerializerUtils.h"
+#include "../LEDArrayConnection.h"
 
 char buffer[sp::MAX_MESSAGE_SIZE];
+LEDArrayConnection ledConnection;
 
 void display(uint8_t byte) {
-	Serialize(buffer, (int)byte, sp::DataType::INTEGER);
-	Serial.print(buffer);
+//	Serialize(buffer, (int)byte, sp::DataType::INTEGER);
+//	Serial.print(buffer);
+	ledConnection.setLEDArrayState(byte);
 	delay(7);
 }
 
 void setup() {
 	Serial.begin(LED_ARRAY_BAUD_RATE);
+	ledConnection.setSerial(&Serial);
 }
 
 void loop() {
@@ -67,17 +71,26 @@ void loop() {
 //	}
 
 
-	display(0b01110000);
-	display(0b11111000);
-	display(0b11111110);
-	display(0b00111111);
-	display(0b00011111);
-	display(0b00111111);
-	display(0b11111110);
-	display(0b11111000);
-	display(0b01110000);
-	display(0x00);
-	display(0x00);
+//	display(0b01110000);
+//	display(0b11111000);
+//	display(0b11111110);
+//	display(0b00111111);
+//	display(0b00011111);
+//	display(0b00111111);
+//	display(0b11111110);
+//	display(0b11111000);
+//	display(0b01110000);
+//	display(0x00);
+//	display(0x00);
+
+	for (int i=0; i<=8; i++) {
+		ledConnection.setNumberOfLEDsOn(i);
+		delay(200);
+	}
+	for (int i=8; i>=0; i--) {
+		ledConnection.setNumberOfLEDsOn(i);
+		delay(200);
+	}
 }
 
 #endif
