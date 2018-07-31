@@ -13,6 +13,13 @@
 
 const int INTEGER_CHAR_LENGTH = 11;
 
+/** Variable default to int. */
+var::var() {
+    m_integerValue = integer;
+    m_currentType = VarType::INTEGER;
+    m_stringValue = nullptr;
+}
+
 var::var(int integer) {
     m_integerValue = integer;
     m_currentType = VarType::INTEGER;

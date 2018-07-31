@@ -29,6 +29,7 @@ private:
     void copy(const var& other);
     
 public:
+    var();
     // Construct integer var.
     var(int integer);
     // Construct string var.
