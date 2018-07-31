@@ -225,6 +225,13 @@ var var::operator--(int) {
     return tmp;
 }
 
+var::operator int() const {
+    if (m_currentType == INTEGER) {
+        return m_integerValue;
+    }
+    return 0;
+}
+
 var::operator bool() const {
     if (m_currentType == INTEGER) {
         return m_integerValue != 0;

@@ -69,6 +69,9 @@ public:
     // Posfix decrement operator.
     var operator--(int);
     
+    // Conversion to int
+    explicit operator int() const;
+    
     // Conversion to bool.
     explicit operator bool() const;
 };
