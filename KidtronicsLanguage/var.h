@@ -73,6 +73,9 @@ public:
     // Conversion to int
     explicit operator int() const;
     
+    // Conversion to unsigned int
+    explicit operator unsigned int() const;
+    
     // Conversion to bool.
     explicit operator bool() const;
 };

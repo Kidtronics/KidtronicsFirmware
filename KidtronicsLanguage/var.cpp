@@ -239,6 +239,13 @@ var::operator int() const {
     return 0;
 }
 
+operator unsigned int() const {
+    if (m_currentType == INTEGER) {
+        return (unsigned int) m_integerValue;
+    }
+    return 0;
+}
+
 var::operator bool() const {
     if (m_currentType == INTEGER) {
         return m_integerValue != 0;
