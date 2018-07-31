@@ -29,6 +29,7 @@ private:
     void copy(const var& other);
     
 public:
+    var();
     // Construct integer var.
     var(int integer);
     // Construct string var.
@@ -68,6 +69,12 @@ public:
     
     // Posfix decrement operator.
     var operator--(int);
+    
+    // Conversion to int
+    explicit operator int() const;
+    
+    // Conversion to unsigned int
+    explicit operator unsigned int() const;
     
     // Conversion to bool.
     explicit operator bool() const;

@@ -13,6 +13,13 @@
 
 const int INTEGER_CHAR_LENGTH = 11;
 
+/** Variable default to int. */
+var::var() {
+    m_integerValue = 0;
+    m_currentType = VarType::INTEGER;
+    m_stringValue = nullptr;
+}
+
 var::var(int integer) {
     m_integerValue = integer;
     m_currentType = VarType::INTEGER;
@@ -223,6 +230,20 @@ var var::operator--(int) {
     var tmp(*this);
     operator--();
     return tmp;
+}
+
+var::operator int() const {
+    if (m_currentType == INTEGER) {
+        return m_integerValue;
+    }
+    return 0;
+}
+
+var::operator unsigned int() const {
+    if (m_currentType == INTEGER) {
+        return (unsigned int) m_integerValue;
+    }
+    return 0;
 }
 
 var::operator bool() const {
