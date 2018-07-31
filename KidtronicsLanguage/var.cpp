@@ -239,7 +239,7 @@ var::operator int() const {
     return 0;
 }
 
-operator unsigned int() const {
+var::operator unsigned int() const {
     if (m_currentType == INTEGER) {
         return (unsigned int) m_integerValue;
     }
