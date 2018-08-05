@@ -35,6 +35,9 @@ private:
     
     // Copy the other variable into itself.
     void copy(const var& other);
+
+    // Get value in double
+    double getValueAsDouble() const;
     
 public:
     // Construct integer var.
@@ -53,8 +56,6 @@ public:
     
     // Assignment operator.
     var& operator=(const var& other);
-    // Get value in double
-    double getValueInDouble() const;
 
     VarType getType(){return m_currentType;}
     

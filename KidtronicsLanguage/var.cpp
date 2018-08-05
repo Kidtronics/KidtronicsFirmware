@@ -10,7 +10,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include "var.h"
-#include <iostream>
 
 const int INTEGER_CHAR_LENGTH = 11;
 
@@ -60,7 +59,7 @@ var& var::operator=(const var& other) {
     return *this;
 }
 /** Get value in double so we can compare int with double. */
-double var::getValueInDouble() const {
+double var::getValueAsDouble() const {
     if(m_currentType == var::VarType::INTEGER) {
         return m_integerValue;
     }
@@ -82,7 +81,7 @@ bool operator==(const var& lhs, const var& rhs) {
         case var::VarType::INTEGER:
         case var::VarType::BOOLEAN:
         case var::VarType::DOUBLE:
-            return lhs.getValueInDouble() == rhs.getValueInDouble();
+            return lhs.getValueAsDouble() == rhs.getValueAsDouble();
         default:
             return false;
     }
@@ -96,7 +95,7 @@ bool operator!=(const var& lhs, const var& rhs) {
         case var::VarType::INTEGER:
         case var::VarType::BOOLEAN:
         case var::VarType::DOUBLE:
-            return lhs.getValueInDouble() != rhs.getValueInDouble();
+            return lhs.getValueAsDouble() != rhs.getValueAsDouble();
         default:
             return false;
     }
@@ -110,7 +109,7 @@ bool operator>(const var& lhs, const var& rhs) {
         case var::VarType::INTEGER:
         case var::VarType::DOUBLE:
         case var::VarType::BOOLEAN:
-            return lhs.getValueInDouble() > rhs.getValueInDouble();
+            return lhs.getValueAsDouble() > rhs.getValueAsDouble();
         default:
             return false;
     }
@@ -124,7 +123,7 @@ bool operator>=(const var& lhs, const var& rhs) {
         case var::VarType::INTEGER:
         case var::VarType::DOUBLE:
         case var::VarType::BOOLEAN:
-            return lhs.getValueInDouble() >= rhs.getValueInDouble();
+            return lhs.getValueAsDouble() >= rhs.getValueAsDouble();
         default:
             return false;
     }
@@ -138,7 +137,7 @@ bool operator<(const var& lhs, const var& rhs) {
         case var::VarType::INTEGER:
         case var::VarType::DOUBLE:
         case var::VarType::BOOLEAN:
-            return lhs.getValueInDouble() < rhs.getValueInDouble();
+            return lhs.getValueAsDouble() < rhs.getValueAsDouble();
         default:
             return false;
     }
@@ -152,7 +151,7 @@ bool operator<=(const var& lhs, const var& rhs) {
         case var::VarType::INTEGER:
         case var::VarType::DOUBLE:
         case var::VarType::BOOLEAN:
-            return lhs.getValueInDouble() <= rhs.getValueInDouble();
+            return lhs.getValueAsDouble() <= rhs.getValueAsDouble();
         default:
             return false;
     }
@@ -188,11 +187,11 @@ var operator+(var lhs, const var& rhs) {
                 return var(lhs.m_integerValue + rhs.m_integerValue);
             }
             else if(rhs.m_currentType == var::VarType::DOUBLE){
-                return var(lhs.getValueInDouble() + rhs.getValueInDouble());
+                return var(lhs.getValueAsDouble() + rhs.getValueAsDouble());
             }
             return lhs;
         case var::VarType::DOUBLE:
-            return var(lhs.getValueInDouble() + rhs.getValueInDouble());
+            return var(lhs.getValueAsDouble() + rhs.getValueAsDouble());
         default:
             return lhs;
     }
@@ -206,23 +205,15 @@ var operator-(var lhs, const var& rhs) {
             return var(lhs.m_integerValue - rhs.m_integerValue);
         }
         else if(rhs.m_currentType == var::VarType::DOUBLE){
-            return var(lhs.getValueInDouble() - rhs.getValueInDouble());
-        }
-        else{
-            return lhs;
+            return var(lhs.getValueAsDouble() - rhs.getValueAsDouble());
         }
     }
     else if(lhs.m_currentType == var::VarType::DOUBLE){
         if(rhs.m_currentType == var::VarType::INTEGER || rhs.m_currentType == var::VarType::DOUBLE){
-            return var(lhs.getValueInDouble() - rhs.getValueInDouble());
-        }
-        else{
-            return lhs;
+            return var(lhs.getValueAsDouble() - rhs.getValueAsDouble());
         }
     }
-    else{
-        return lhs;
-    }
+    return lhs;
 }
 
 var& var::operator++() {
