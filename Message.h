@@ -1,5 +1,11 @@
 /*
  * ParsedMessage.h
+ * This class is used by Message parser class.
+ * The Message Parser returns this object after it parses
+ * the buffer from Serial port.
+ * Invoke getParsedMessage() function from MessageParser class
+ * to get the message. Then invoke the proper getter function
+ * in message class based on DataType of the message.
  *
  *  Created on: Jun 21, 2018
  *      Author: baixiao

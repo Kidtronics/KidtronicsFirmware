@@ -34,9 +34,6 @@ public:
 
 	/** Get parsed message. */
 	Message getParsedMessage();
-
-	/** Check if the data is corrupted. */
-//    bool isCorrupted();
 };
 
 
