@@ -83,12 +83,18 @@ void loop() {
 //	display(0x00);
 //	display(0x00);
 
-	for (int i=0; i<=8; i++) {
-		ledConnection.setNumberOfLEDsOn(i);
+	for (var i=0; i<=8; i++) {
+		ledConnection.setNumberOfLEDsOnWithVar(i, LEDArrayConnection::LEFT);
 		delay(200);
 	}
-	for (int i=8; i>=0; i--) {
-		ledConnection.setNumberOfLEDsOn(i);
+	for (var i=8; i>=0; i--) {
+		ledConnection.setNumberOfLEDsOnWithVar(i, LEDArrayConnection::RIGHT);
+		delay(200);
+	}
+
+	for (var i=0; i<=4; i++) {
+		ledConnection.setLEDStateWithVar(5+i, HIGH);
+		ledConnection.setLEDStateWithVar(4-i, HIGH);
 		delay(200);
 	}
 }
