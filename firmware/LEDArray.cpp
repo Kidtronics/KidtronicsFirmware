@@ -48,8 +48,6 @@ char buffer[sp::MAX_MESSAGE_SIZE];
 LEDArrayConnection ledConnection;
 
 void display(uint8_t byte) {
-//	Serialize(buffer, (int)byte, sp::DataType::INTEGER);
-//	Serial.print(buffer);
 	ledConnection.setLEDArrayState(byte);
 	delay(7);
 }
@@ -59,30 +57,21 @@ void setup() {
 	ledConnection.setSerial(&Serial);
 }
 
+void displayHeartPattern() {
+	display(0b01110000);
+	display(0b11111000);
+	display(0b11111110);
+	display(0b00111111);
+	display(0b00011111);
+	display(0b00111111);
+	display(0b11111110);
+	display(0b11111000);
+	display(0b01110000);
+	display(0x00);
+	display(0x00);
+}
+
 void loop() {
-//	for (int i=0; i<256; i++) {
-//		Serialize(buffer, i, sp::DataType::INTEGER);
-//		Serial.print(buffer);
-//		delay(1);
-//	}
-//	if (Serial.available()) {
-//		Serialize(buffer, (int) Serial.parseInt(), sp::DataType::INTEGER);
-//		Serial.print(buffer);
-//	}
-
-
-//	display(0b01110000);
-//	display(0b11111000);
-//	display(0b11111110);
-//	display(0b00111111);
-//	display(0b00011111);
-//	display(0b00111111);
-//	display(0b11111110);
-//	display(0b11111000);
-//	display(0b01110000);
-//	display(0x00);
-//	display(0x00);
-
 	for (var i=0; i<=8; i++) {
 		ledConnection.setNumberOfLEDsOnWithVar(i, LEDArrayConnection::LEFT);
 		delay(200);
