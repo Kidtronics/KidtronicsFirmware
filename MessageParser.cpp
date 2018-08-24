@@ -43,19 +43,6 @@ Message MessageParser::getParsedMessage() {
 	return m_parsedMessage;
 }
 
-//bool MessageParser::isCorrupted() {
-//    const char* ptr = m_message;
-//    char checksum = *ptr;
-//    ptr++;
-//    while (*(ptr-1) == ESCAPE_CHAR || *ptr != '\0') {
-//        checksum ^= *ptr;
-//        ptr++;
-//    }
-//    m_messageLength = ptr - m_message;
-//    return *ptr != 0x00;
-//}
-
-
 ////////////////Private Functions/////////////////
 
 /** Returns the length of the message. */

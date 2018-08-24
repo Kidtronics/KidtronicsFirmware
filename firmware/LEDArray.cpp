@@ -42,31 +42,22 @@ void serialEvent() {
 #elif defined(LED_ARRAY_MASTER)
 
 #include "../SerializerUtils.h"
+#include "../LEDArrayConnection.h"
 
 char buffer[sp::MAX_MESSAGE_SIZE];
+LEDArrayConnection ledConnection;
 
 void display(uint8_t byte) {
-	Serialize(buffer, (int)byte, sp::DataType::INTEGER);
-	Serial.print(buffer);
+	ledConnection.setLEDArrayState(byte);
 	delay(7);
 }
 
 void setup() {
 	Serial.begin(LED_ARRAY_BAUD_RATE);
+	ledConnection.setSerial(&Serial);
 }
 
-void loop() {
-//	for (int i=0; i<256; i++) {
-//		Serialize(buffer, i, sp::DataType::INTEGER);
-//		Serial.print(buffer);
-//		delay(1);
-//	}
-//	if (Serial.available()) {
-//		Serialize(buffer, (int) Serial.parseInt(), sp::DataType::INTEGER);
-//		Serial.print(buffer);
-//	}
-
-
+void displayHeartPattern() {
 	display(0b01110000);
 	display(0b11111000);
 	display(0b11111110);
@@ -78,6 +69,23 @@ void loop() {
 	display(0b01110000);
 	display(0x00);
 	display(0x00);
+}
+
+void loop() {
+	for (var i=0; i<=8; i++) {
+		ledConnection.setNumberOfLEDsOnWithVar(i, LEDArrayConnection::LEFT);
+		delay(200);
+	}
+	for (var i=8; i>=0; i--) {
+		ledConnection.setNumberOfLEDsOnWithVar(i, LEDArrayConnection::RIGHT);
+		delay(200);
+	}
+
+	for (var i=0; i<=4; i++) {
+		ledConnection.setLEDStateWithVar(5+i, HIGH);
+		ledConnection.setLEDStateWithVar(4-i, HIGH);
+		delay(200);
+	}
 }
 
 #endif
